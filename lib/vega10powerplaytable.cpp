@@ -275,14 +275,14 @@ static std::unique_ptr<Table> parse(ATOM_Vega10_PowerTune_Table_V3 *ptr)
 }
 
 template<typename T, typename E>
-static std::unique_ptr<Table> parse_array(T *ptr, E *elem)
+static std::unique_ptr<Table> parse_array(T *ptr, const std::string &name, E *elem)
 {
     std::unique_ptr<Table> t(new Table());
     t->ADD_FIELD(ucRevId, ptr);
     t->ADD_FIELD(ucNumEntries, ptr);
 
     for (int i = 0; i < ptr->ucNumEntries; i++) {
-        t->tables[FieldBase::to_string(i)] = parse(&elem[i]);
+        t->tables[name + "[" + FieldBase::to_string(i) + "]"] = parse(&elem[i]);
     }
 
     return t;
@@ -291,20 +291,20 @@ static std::unique_ptr<Table> parse_array(T *ptr, E *elem)
 template<typename T>
 static std::unique_ptr<Table> parse(T *ptr)
 {
-    return parse_array(ptr, ptr->entries);
+    return parse_array(ptr, "entries", ptr->entries);
 }
 
 static std::unique_ptr<Table> parse(ATOM_Vega10_State_Array *ptr)
 {
-    return parse_array(ptr, ptr->states);
+    return parse_array(ptr, "states", ptr->states);
 }
 
 static std::unique_ptr<Table> parse(ATOM_Vega10_GFXCLK_Dependency_Table *ptr)
 {
     if (ptr->ucRevId == 0) {
-        return parse_array(ptr, ptr->entries);
+        return parse_array(ptr, "entries", ptr->entries);
     } else if (ptr->ucRevId == 1) {
-        return parse_array(ptr, reinterpret_cast<ATOM_Vega10_GFXCLK_Dependency_Record_V2 *>(ptr->entries));
+        return parse_array(ptr, "states", reinterpret_cast<ATOM_Vega10_GFXCLK_Dependency_Record_V2 *>(ptr->entries));
     } else {
         return std::unique_ptr<Table>(new Table());
     }
