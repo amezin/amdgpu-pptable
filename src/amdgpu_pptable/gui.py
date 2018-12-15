@@ -105,21 +105,29 @@ class MainWindow(QtWidgets.QMainWindow):
         self.parse()
 
     def load(self, path):
-        with open(path, 'rb') as f:
-            self.orig_buf = f.read()
+        try:
+            with open(path, 'rb') as f:
+                self.orig_buf = f.read()
 
-        self.setWindowFilePath(path)
-        self.save_dialog.selectFile(path)
-        self.revert()
+            self.setWindowFilePath(path)
+            self.save_dialog.selectFile(path)
+            self.revert()
+
+        except Exception as ex:
+            QtWidgets.QMessageBox.critical(self, f"Can't load {path}", str(ex))
 
     def save(self, path):
-        with open(path, 'wb') as f:
-            f.write(self.buf)
+        try:
+            with open(path, 'wb') as f:
+                f.write(self.buf)
 
-        self.orig_buf = bytearray(self.buf)
-        self.setWindowFilePath(path)
-        self.open_dialog.selectFile(path)
-        self.update_modified_state()
+            self.orig_buf = bytearray(self.buf)
+            self.setWindowFilePath(path)
+            self.open_dialog.selectFile(path)
+            self.update_modified_state()
+
+        except Exception as ex:
+            QtWidgets.QMessageBox.critical(self, f"Can't save {path}", str(ex))
 
 
 def main():
