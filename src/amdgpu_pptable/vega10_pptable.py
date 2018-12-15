@@ -67,7 +67,7 @@ def gfxclk_record_type(rev_id):
 
 def parse(buffer):
     main_table = ATOM_Vega10_POWERPLAYTABLE.from_buffer(buffer)
-    parse_result = {'Table': main_table}
+    parse_result = {'Main': main_table}
 
     def subtable(name, parse_func, *args, **kwargs):
         offset = getattr(main_table, f'us{name}Offset')
