@@ -3,7 +3,7 @@ import ctypes
 import json
 import sys
 
-from . import vega10_pptable
+from . import vega10_pptable, version
 
 
 def make_serializable(obj):
@@ -26,6 +26,7 @@ def main(args=None):
     cmdline.add_argument('pptable_file', type=argparse.FileType('rb'))
     cmdline.add_argument('-o', '--output', type=argparse.FileType('wt'), default=sys.stdout)
     cmdline.add_argument('--indent', type=int)
+    cmdline.add_argument('--version', action='version', version=f'%(prog)s {version.version}')
     dump(**vars(cmdline.parse_args(args)))
 
 

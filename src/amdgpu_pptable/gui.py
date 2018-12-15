@@ -5,7 +5,7 @@ import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from . import vega10_pptable
+from . import vega10_pptable, version
 
 
 def type_label_item(type):
@@ -133,9 +133,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
+    app.setApplicationVersion(version.version)
 
     cmdline_parser = QtCore.QCommandLineParser()
     cmdline_parser.addHelpOption()
+    cmdline_parser.addVersionOption()
     cmdline_parser.addPositionalArgument('pptable_file', "Powerplay table file")
     cmdline_parser.process(app)
 
