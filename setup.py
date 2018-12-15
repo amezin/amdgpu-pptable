@@ -106,8 +106,5 @@ setuptools.setup(
     tests_require=['pytest'],
     cmdclass={
         'generate_ctypes': GenerateCtypes
-    },
-    dependency_links=[
-        'git+https://github.com/amezin/ctypeslib.git#egg=ctypeslib2'
-    ]
+    }
 )
