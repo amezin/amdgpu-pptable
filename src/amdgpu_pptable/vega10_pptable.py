@@ -38,8 +38,9 @@ def parse_array_subtable(buffer, offset, subtable_type, rev_id_dict=None):
     class DynamicArraySubtable(ctypes.LittleEndianStructure):
         _pack_ = subtable_type._pack_
         _fields_ = subtable_type._fields_[:-1] + [(entries_name, entry_type * header.ucNumEntries)]
-        __name__ = f'{subtable_type.__name__}[{header.ucNumEntries}]'
-        __qualname__ = f'{subtable_type.__qualname__}[{header.ucNumEntries}]'
+
+    DynamicArraySubtable.__name__ = f'{subtable_type.__name__}[{header.ucNumEntries}]'
+    DynamicArraySubtable.__qualname__ = f'{subtable_type.__qualname__}[{header.ucNumEntries}]'
 
     return DynamicArraySubtable.from_buffer(buffer, offset)
 
