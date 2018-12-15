@@ -112,5 +112,5 @@ setuptools.setup(
         'console_scripts': ['amdgpu-pptable-to-json=amdgpu_pptable.dump:main'],
         'gui_scripts': ['amdgpu-pptable-editor=amdgpu_pptable.gui:main']
     },
-    python_requires='>=3'
+    python_requires='>=3.6'
 )
