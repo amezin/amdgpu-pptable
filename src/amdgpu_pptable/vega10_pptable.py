@@ -12,30 +12,30 @@ class UnknownRevId(KeyError):
     pass
 
 
-def parse_subtable(buffer, offset, type_select):
+def parse_table(buffer, offset, type_select):
     header = Vega10_PPTable_Generic_SubTable_Header.from_buffer(buffer, offset)
     return type_select(header.ucRevId).from_buffer(buffer, offset)
 
 
-def parse_array_subtable(buffer, offset, subtable_type, type_select=None):
-    entries_name, entries_type = subtable_type._fields_[-1]
+def parse_array_table(buffer, offset, table_type, type_select=None):
+    entries_name, entries_type = table_type._fields_[-1]
     assert entries_type._length_ == 1
 
-    header = subtable_type.from_buffer(buffer, offset)
+    header = table_type.from_buffer(buffer, offset)
 
     if type_select is None:
         entry_type = entries_type._type_
     else:
         entry_type = type_select(header.ucRevId)
 
-    class DynamicArraySubtable(ctypes.LittleEndianStructure):
-        _pack_ = subtable_type._pack_
-        _fields_ = subtable_type._fields_[:-1] + [(entries_name, entry_type * header.ucNumEntries)]
+    class DynamicArrayTable(ctypes.LittleEndianStructure):
+        _pack_ = table_type._pack_
+        _fields_ = table_type._fields_[:-1] + [(entries_name, entry_type * header.ucNumEntries)]
 
-    DynamicArraySubtable.__name__ = f'{subtable_type.__name__}[{header.ucNumEntries}]'
-    DynamicArraySubtable.__qualname__ = f'{subtable_type.__qualname__}[{header.ucNumEntries}]'
+    DynamicArrayTable.__name__ = f'{table_type.__name__}[{header.ucNumEntries}]'
+    DynamicArrayTable.__qualname__ = f'{table_type.__qualname__}[{header.ucNumEntries}]'
 
-    return DynamicArraySubtable.from_buffer(buffer, offset)
+    return DynamicArrayTable.from_buffer(buffer, offset)
 
 
 def fan_table_type(rev_id):
@@ -69,7 +69,7 @@ def parse(buffer):
     main_table = ATOM_Vega10_POWERPLAYTABLE.from_buffer(buffer)
     parse_result = {'Main': main_table}
 
-    def subtable(name, parse_func, *args, **kwargs):
+    def table(name, parse_func, *args, **kwargs):
         offset = getattr(main_table, f'us{name}Offset')
         if offset > 0:
             try:
@@ -77,24 +77,24 @@ def parse(buffer):
             except UnknownRevId as ex:
                 LOG.warning("%s: unknown ucRevId: %s", name, ex.args[0])
 
-    subtable('StateArray', parse_array_subtable, ATOM_Vega10_State_Array)
-    subtable('SocclkDependencyTable', parse_array_subtable, ATOM_Vega10_SOCCLK_Dependency_Table)
-    subtable('MclkDependencyTable', parse_array_subtable, ATOM_Vega10_MCLK_Dependency_Table)
-    subtable('GfxclkDependencyTable', parse_array_subtable, ATOM_Vega10_GFXCLK_Dependency_Table, gfxclk_record_type)
-    subtable('DcefclkDependencyTable', parse_array_subtable, ATOM_Vega10_DCEFCLK_Dependency_Table)
-    subtable('PixclkDependencyTable', parse_array_subtable, ATOM_Vega10_PIXCLK_Dependency_Table)
-    subtable('DispClkDependencyTable', parse_array_subtable, ATOM_Vega10_DISPCLK_Dependency_Table)
-    subtable('PhyClkDependencyTable', parse_array_subtable, ATOM_Vega10_PHYCLK_Dependency_Table)
-    subtable('VddcLookupTable', parse_array_subtable, ATOM_Vega10_Voltage_Lookup_Table)
-    subtable('VddmemLookupTable', parse_array_subtable, ATOM_Vega10_Voltage_Lookup_Table)
-    subtable('VddciLookupTable', parse_array_subtable, ATOM_Vega10_Voltage_Lookup_Table)
-    subtable('MMDependencyTable', parse_array_subtable, ATOM_Vega10_MM_Dependency_Table)
-    subtable('VCEStateTable', parse_array_subtable, ATOM_Vega10_VCE_State_Table)
-    subtable('HardLimitTable', parse_array_subtable, ATOM_Vega10_Hard_Limit_Table)
-    subtable('PCIETable', parse_array_subtable, ATOM_Vega10_PCIE_Table)
+    table('StateArray', parse_array_table, ATOM_Vega10_State_Array)
+    table('SocclkDependencyTable', parse_array_table, ATOM_Vega10_SOCCLK_Dependency_Table)
+    table('MclkDependencyTable', parse_array_table, ATOM_Vega10_MCLK_Dependency_Table)
+    table('GfxclkDependencyTable', parse_array_table, ATOM_Vega10_GFXCLK_Dependency_Table, gfxclk_record_type)
+    table('DcefclkDependencyTable', parse_array_table, ATOM_Vega10_DCEFCLK_Dependency_Table)
+    table('PixclkDependencyTable', parse_array_table, ATOM_Vega10_PIXCLK_Dependency_Table)
+    table('DispClkDependencyTable', parse_array_table, ATOM_Vega10_DISPCLK_Dependency_Table)
+    table('PhyClkDependencyTable', parse_array_table, ATOM_Vega10_PHYCLK_Dependency_Table)
+    table('VddcLookupTable', parse_array_table, ATOM_Vega10_Voltage_Lookup_Table)
+    table('VddmemLookupTable', parse_array_table, ATOM_Vega10_Voltage_Lookup_Table)
+    table('VddciLookupTable', parse_array_table, ATOM_Vega10_Voltage_Lookup_Table)
+    table('MMDependencyTable', parse_array_table, ATOM_Vega10_MM_Dependency_Table)
+    table('VCEStateTable', parse_array_table, ATOM_Vega10_VCE_State_Table)
+    table('HardLimitTable', parse_array_table, ATOM_Vega10_Hard_Limit_Table)
+    table('PCIETable', parse_array_table, ATOM_Vega10_PCIE_Table)
 
-    subtable('FanTable', parse_subtable, fan_table_type)
-    subtable('PowerTuneTable', parse_subtable, powertune_table_type)
-    subtable('ThermalController', parse_subtable, lambda _: ATOM_Vega10_Thermal_Controller)
+    table('FanTable', parse_table, fan_table_type)
+    table('PowerTuneTable', parse_table, powertune_table_type)
+    table('ThermalController', parse_table, lambda _: ATOM_Vega10_Thermal_Controller)
 
     return collections.namedtuple('ParseResult', parse_result.keys())(*parse_result.values())
