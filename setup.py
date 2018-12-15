@@ -102,9 +102,14 @@ setuptools.setup(
     name='amdgpu-pptable',
     packages=setuptools.find_packages('src'),
     package_dir={'': 'src'},
+    install_requires=['PyQt5'],
     setup_requires=['pytest-runner', 'ctypeslib2'],
     tests_require=['pytest'],
     cmdclass={
         'generate_ctypes': GenerateCtypes
+    },
+    entry_points={
+        'console_scripts': ['amdgpu-pptable-to-json=amdgpu_pptable.dump:main'],
+        'gui_scripts': ['amdgpu-pptable-editor=amdgpu_pptable.gui:main']
     }
 )
