@@ -69,6 +69,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.tree = QtWidgets.QTreeView()
         self.setCentralWidget(self.tree)
+        self.tree.setAlternatingRowColors(True)
+        self.tree.setAnimated(True)
 
         self.open_dialog = QtWidgets.QFileDialog()
         self.open_dialog.setFileMode(QtWidgets.QFileDialog.ExistingFile)
@@ -94,6 +96,7 @@ class MainWindow(QtWidgets.QMainWindow):
         model.setHorizontalHeaderLabels(["Field", "Value"])
         model.itemChanged.connect(lambda _: self.update_modified_state())
         self.tree.setModel(model)
+        self.tree.header().setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
 
         self.pptables = vega10_pptable.parse(self.buf)
         for name, table in self.pptables._asdict().items():
