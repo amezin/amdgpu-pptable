@@ -8,20 +8,14 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from . import vega10_pptable
 
 
-def label_item(text):
-    item = QtGui.QStandardItem(text)
-    item.setEditable(False)
-    return item
-
-
 def type_label_item(type):
-    item = label_item(type.replace('struct__', 'struct '))
+    item = QtGui.QStandardItem(type.replace('struct__', 'struct '))
     item.setEnabled(False)
     return item
 
 
 def build_standard_item(name, obj, edit_func=None):
-    name_item = label_item(name)
+    name_item = QtGui.QStandardItem(name)
 
     if isinstance(obj, ctypes.Structure):
         obj_type = type(obj)
@@ -59,6 +53,9 @@ class Model(QtGui.QStandardItemModel):
 
         return super().setData(index, value, role)
 
+    def buddy(self, index):
+        return index.siblingAtColumn(1)
+
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -71,6 +68,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self.tree)
         self.tree.setAlternatingRowColors(True)
         self.tree.setAnimated(True)
+        self.tree.setEditTriggers(QtWidgets.QAbstractItemView.AllEditTriggers)
 
         self.open_dialog = QtWidgets.QFileDialog()
         self.open_dialog.setFileMode(QtWidgets.QFileDialog.ExistingFile)
