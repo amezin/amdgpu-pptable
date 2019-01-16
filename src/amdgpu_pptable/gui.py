@@ -5,7 +5,7 @@ import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from . import vega10_pptable, version
+from . import version_detect, version
 
 
 def type_label_item(type):
@@ -96,7 +96,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tree.setModel(model)
         self.tree.header().setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
 
-        self.pptables = vega10_pptable.parse(self.buf)
+        self.pptables = version_detect.parse(self.buf)
         for name, table in self.pptables._asdict().items():
             model.appendRow(build_standard_item(name, table))
 

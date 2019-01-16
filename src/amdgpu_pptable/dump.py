@@ -3,7 +3,7 @@ import ctypes
 import json
 import sys
 
-from . import vega10_pptable, version
+from . import version_detect, version
 
 
 def make_serializable(obj):
@@ -17,7 +17,7 @@ def make_serializable(obj):
 
 
 def dump(pptable_file, output, indent=None):
-    pptable = vega10_pptable.parse(bytearray(pptable_file.read()))
+    pptable = version_detect.parse(bytearray(pptable_file.read()))
     json.dump({k: make_serializable(v) for k, v in pptable._asdict().items()}, output, indent=indent)
 
 

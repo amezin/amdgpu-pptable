@@ -97,6 +97,21 @@ class GenerateCtypes(distutils.core.Command):
                        self.generate_ctypes,
                        (header_file, py_file, cpp_flags))
 
+        header_file = os.path.join(self.kernel_dir, 'drivers/gpu/drm/amd/powerplay/hwmgr/pptable_v1_0.h')
+        py_file = os.path.join(self.out_dir, 'pptable_v1_0.py')
+        includes = [
+            os.path.join(self.kernel_dir, 'drivers/gpu/drm/amd/include/atom-types.h'),
+            os.path.join(self.kernel_dir, 'drivers/gpu/drm/amd/include/atombios.h')
+        ]
+        cpp_flags = ['-include', 'stdint.h']
+        for inc in includes:
+            cpp_flags.extend(('-include', inc))
+
+        self.make_file([header_file] + includes + [__file__],
+                       py_file,
+                       self.generate_ctypes,
+                       (header_file, py_file, cpp_flags))
+
 
 setuptools.setup(
     name='amdgpu-pptable',
