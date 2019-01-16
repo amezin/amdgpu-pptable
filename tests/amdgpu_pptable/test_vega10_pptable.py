@@ -21,6 +21,13 @@ def test_load():
     assert pptable.GfxclkDependencyTable.entries[7].ulClk == 163000
     assert pptable.GfxclkDependencyTable.entries[7].ucVddInd == 7
 
+    assert pptable.PowerTuneTable.usSoftwareShutdownTemp == 91
+    assert pptable.FanTable.ucFanMinRPM == 3
+    assert pptable.FanTable.ucFanMaxRPM == 33
+
+    assert list(e.ulMemClk / 100 for e in pptable.MclkDependencyTable.entries) == [167, 500, 800, 945]
+    assert list(e.ulClk / 100 for e in pptable.GfxclkDependencyTable.entries) == [852, 991, 1084, 1138, 1200, 1401, 1536, 1630]
+
     pptable.FanTable.usMinimumPWMLimit = 14
     pptable.FanTable.ucEnableZeroRPM = 0
 
