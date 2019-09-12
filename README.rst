@@ -1,3 +1,6 @@
+.. image:: https://github.com/amezin/powerplay-table-editor/workflows/Test%20with%20pytest/badge.svg
+
+
 PowerPlay table editor
 ======================
 
