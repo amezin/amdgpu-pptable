@@ -1,0 +1,24 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python_version:
+          - '3.6'
+          - '3.7'
+        include:
+          - python_version: '3.6'
+            toxenv: py36
+          - python_version: '3.7'
+            toxenv: py37
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python_version }}
+    - run: pip install tox
+    - run: tox -e ${{ matrix.toxenv }}
