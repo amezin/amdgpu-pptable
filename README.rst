@@ -1,4 +1,4 @@
-|test-badge| |flake8-badge|
+|Tests badge| |flake8 lint badge|
 
 PowerPlay table editor
 ======================
@@ -41,5 +41,5 @@ $ env EDITOR=amdgpu-pptable-editor sudoedit /sys/class/drm/card*/device/pp_table
 .. Caution::
    You can completely screw up your card by modifying its pp_table.
 
-.. |test-badge| image:: https://github.com/amezin/powerplay-table-editor/workflows/.github/workflows/test.yml/badge.svg
-.. |flake8-badge| image:: https://github.com/amezin/powerplay-table-editor/workflows/.github/workflows/flake8.yml/badge.svg
+.. |Tests badge| image:: https://github.com/amezin/powerplay-table-editor/workflows/Tests/badge.svg
+.. |flake8 lint badge| image:: https://github.com/amezin/powerplay-table-editor/workflows/flake8%20lint/badge.svg
