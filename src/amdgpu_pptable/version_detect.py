@@ -1,4 +1,4 @@
-from . import pptable_v1_0, vega10_pptable
+from . import pptable_v1_0, vega10_pptable, smu_v11_0_pptable_navi10
 
 
 class UnknownTableRevision(KeyError):
@@ -13,5 +13,8 @@ def parse(buffer):
 
     if header.ucTableFormatRevision == vega10_pptable.ATOM_Vega10_TABLE_REVISION_VEGA10:
         return vega10_pptable.parse(buffer)
+
+    if header.ucTableFormatRevision == smu_v11_0_pptable_navi10.SMU_11_0_TABLE_FORMAT_REVISION:
+        return smu_v11_0_pptable_navi10.parse(buffer)
 
     raise UnknownTableRevision(header.ucTableFormatRevision)
