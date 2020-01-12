@@ -41,8 +41,10 @@ def parse_array_table(buffer, offset, table_type, type_select=None):
 def fan_table_type(rev_id):
     if rev_id == 10:
         return ATOM_Vega10_Fan_Table
-    elif rev_id > 10:
+    elif rev_id == 0xb:
         return ATOM_Vega10_Fan_Table_V2
+    elif rev_id > 0xb:
+        return ATOM_Vega10_Fan_Table_V3
     else:
         raise UnknownRevId(rev_id)
 

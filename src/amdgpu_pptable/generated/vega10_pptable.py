@@ -328,6 +328,33 @@ class struct__ATOM_Vega10_Fan_Table_V2(ctypes.LittleEndianStructure):
      ]
 
 ATOM_Vega10_Fan_Table_V2 = struct__ATOM_Vega10_Fan_Table_V2
+class struct__ATOM_Vega10_Fan_Table_V3(ctypes.LittleEndianStructure):
+    _pack_ = True # source:False
+    _fields_ = [
+    ('ucRevId', ctypes.c_ubyte),
+    ('usFanOutputSensitivity', ctypes.c_uint16),
+    ('usFanAcousticLimitRpm', ctypes.c_uint16),
+    ('usThrottlingRPM', ctypes.c_uint16),
+    ('usTargetTemperature', ctypes.c_uint16),
+    ('usMinimumPWMLimit', ctypes.c_uint16),
+    ('usTargetGfxClk', ctypes.c_uint16),
+    ('usFanGainEdge', ctypes.c_uint16),
+    ('usFanGainHotspot', ctypes.c_uint16),
+    ('usFanGainLiquid', ctypes.c_uint16),
+    ('usFanGainVrVddc', ctypes.c_uint16),
+    ('usFanGainVrMvdd', ctypes.c_uint16),
+    ('usFanGainPlx', ctypes.c_uint16),
+    ('usFanGainHbm', ctypes.c_uint16),
+    ('ucEnableZeroRPM', ctypes.c_ubyte),
+    ('usFanStopTemperature', ctypes.c_uint16),
+    ('usFanStartTemperature', ctypes.c_uint16),
+    ('ucFanParameters', ctypes.c_ubyte),
+    ('ucFanMinRPM', ctypes.c_ubyte),
+    ('ucFanMaxRPM', ctypes.c_ubyte),
+    ('usMGpuThrottlingRPM', ctypes.c_uint16),
+     ]
+
+ATOM_Vega10_Fan_Table_V3 = struct__ATOM_Vega10_Fan_Table_V3
 class struct__ATOM_Vega10_Thermal_Controller(ctypes.LittleEndianStructure):
     _pack_ = True # source:False
     _fields_ = [
@@ -514,7 +541,7 @@ __all__ =\
     'ATOM_Vega10_DISALLOW_ON_DC',
     'ATOM_Vega10_DISPCLK_Dependency_Table',
     'ATOM_Vega10_ENABLE_VARIBRIGHT', 'ATOM_Vega10_Fan_Table',
-    'ATOM_Vega10_Fan_Table_V2',
+    'ATOM_Vega10_Fan_Table_V2', 'ATOM_Vega10_Fan_Table_V3',
     'ATOM_Vega10_GFXCLK_Dependency_Record',
     'ATOM_Vega10_GFXCLK_Dependency_Record_V2',
     'ATOM_Vega10_GFXCLK_Dependency_Table',
@@ -543,6 +570,7 @@ __all__ =\
     'struct__ATOM_Vega10_DISPCLK_Dependency_Table',
     'struct__ATOM_Vega10_Fan_Table',
     'struct__ATOM_Vega10_Fan_Table_V2',
+    'struct__ATOM_Vega10_Fan_Table_V3',
     'struct__ATOM_Vega10_GFXCLK_Dependency_Record',
     'struct__ATOM_Vega10_GFXCLK_Dependency_Record_V2',
     'struct__ATOM_Vega10_GFXCLK_Dependency_Table',
