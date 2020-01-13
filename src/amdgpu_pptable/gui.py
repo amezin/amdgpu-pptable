@@ -1,4 +1,6 @@
+import collections.abc
 import ctypes
+import enum
 import functools
 import operator
 import sys
@@ -9,8 +11,18 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from . import version_detect, version
 
 
+def fancy_type_name(obj_type):
+    if hasattr(obj_type, 'wrapped_type'):
+        return fancy_type_name(obj_type.wrapped_type)
+
+    if issubclass(obj_type, ctypes.Array):
+        return f'{obj_type._type_.__name__}[{obj_type._length_}]'
+
+    return obj_type.__name__
+
+
 def type_label_item(type):
-    item = QtGui.QStandardItem(type.replace('struct__', 'struct '))
+    item = QtGui.QStandardItem(fancy_type_name(type))
     item.setEnabled(False)
     return item
 
@@ -18,23 +30,33 @@ def type_label_item(type):
 def build_standard_item(name, obj, edit_func=None):
     name_item = QtGui.QStandardItem(name)
 
-    if isinstance(obj, ctypes.Structure):
+    if isinstance(obj, collections.abc.MutableMapping):
+        for key, value in obj.items():
+            if isinstance(key, enum.Enum):
+                field_name = key.name
+            else:
+                field_name = key
+
+            name_item.appendRow(build_standard_item(f'{name}[{field_name}]', value,
+                                                    functools.partial(operator.setitem, obj, key)))
+
+        return [name_item, type_label_item(type(obj))]
+
+    elif isinstance(obj, ctypes.Structure):
         obj_type = type(obj)
 
         for field_name, _ in obj_type._fields_:
             name_item.appendRow(build_standard_item(field_name, getattr(obj, field_name),
                                                     functools.partial(setattr, obj, field_name)))
 
-        return [name_item, type_label_item(obj_type.__name__)]
+        return [name_item, type_label_item(obj_type)]
 
     elif isinstance(obj, ctypes.Array):
-        obj_type = type(obj)
-
         for i in range(len(obj)):
             name_item.appendRow(build_standard_item(f'{name}[{i}]', obj[i],
                                                     functools.partial(operator.setitem, obj, i)))
 
-        return [name_item, type_label_item(f'{obj_type._type_.__name__}[{obj_type._length_}]')]
+        return [name_item, type_label_item(type(obj))]
 
     else:
         edit_item = QtGui.QStandardItem(str(obj))
