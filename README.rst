@@ -43,3 +43,12 @@ $ env EDITOR=amdgpu-pptable-editor sudoedit /sys/class/drm/card*/device/pp_table
 
 .. |Tests badge| image:: https://github.com/amezin/powerplay-table-editor/workflows/Tests/badge.svg
 .. |flake8 lint badge| image:: https://github.com/amezin/powerplay-table-editor/workflows/flake8%20lint/badge.svg
+
+Generating ctypes structs
+-------------------------
+
+Generated code is tracked in git, it is located in `src/amdgpu_pptable/generated`.
+
+To re-generate it (with, maybe, different kernel sources)::
+
+$ tox -e generate-ctypes -- -k path/to/kernel/sources
