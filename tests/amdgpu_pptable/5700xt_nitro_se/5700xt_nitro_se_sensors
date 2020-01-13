@@ -1,0 +1,11 @@
+amdgpu-pci-6700
+Adapter: PCI adapter
+vddgfx:      725.00 mV 
+fan1:        1169 RPM  (min =    0 RPM, max = 3400 RPM)
+edge:         +49.0°C  (crit = +118.0°C, hyst = -273.1°C)
+                       (emerg = +99.0°C)
+junction:     +50.0°C  (crit = +99.0°C, hyst = -273.1°C)
+                       (emerg = +99.0°C)
+mem:          +54.0°C  (crit = +99.0°C, hyst = -273.1°C)
+                       (emerg = +99.0°C)
+power1:       30.00 W  (cap = 240.00 W)
