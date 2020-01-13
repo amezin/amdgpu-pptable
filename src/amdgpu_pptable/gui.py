@@ -132,6 +132,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
 def main():
+    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps)
+    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
+
     app = QtWidgets.QApplication(sys.argv)
     app.setApplicationVersion(version.version)
 
