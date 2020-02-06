@@ -31,9 +31,7 @@ def parse_array_table(buffer, offset, table_type, type_select=None):
     class DynamicArrayTable(ctypes.LittleEndianStructure):
         _pack_ = table_type._pack_
         _fields_ = table_type._fields_[:-1] + [(entries_name, entry_type * header.ucNumEntries)]
-
-    DynamicArrayTable.__name__ = f'{table_type.__name__}[{header.ucNumEntries}]'
-    DynamicArrayTable.__qualname__ = f'{table_type.__qualname__}[{header.ucNumEntries}]'
+        wrapped_type = table_type
 
     return DynamicArrayTable.from_buffer(buffer, offset)
 
