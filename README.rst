@@ -18,7 +18,7 @@ Dependencies:
 
 On recent Debians/Ubuntus::
 
-$ apt-get install python3-pyqt5 python3-pip git
+$ sudo apt-get install python3-pyqt5 python3-pip git
 $ pip3 install --user git+https://github.com/amezin/powerplay-table-editor.git
 
 Usage
@@ -41,14 +41,15 @@ $ env EDITOR=amdgpu-pptable-editor sudoedit /sys/class/drm/card*/device/pp_table
 .. Caution::
    You can completely screw up your card by modifying its pp_table.
 
-.. |Tests badge| image:: https://github.com/amezin/powerplay-table-editor/workflows/Tests/badge.svg
-.. |flake8 lint badge| image:: https://github.com/amezin/powerplay-table-editor/workflows/flake8%20lint/badge.svg
-
 Generating ctypes structs
 -------------------------
 
-Generated code is tracked in git, it is located in `src/amdgpu_pptable/generated`.
+Generated code is tracked in git, it is located in ``src/amdgpu_pptable/generated``.
 
 To re-generate it (with, maybe, different kernel sources)::
 
 $ tox -e generate-ctypes -- -k path/to/kernel/sources
+
+
+.. |Tests badge| image:: https://github.com/amezin/powerplay-table-editor/workflows/Tests/badge.svg
+.. |flake8 lint badge| image:: https://github.com/amezin/powerplay-table-editor/workflows/flake8%20lint/badge.svg
