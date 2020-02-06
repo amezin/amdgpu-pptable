@@ -2,6 +2,7 @@ import ctypes
 import functools
 import operator
 import sys
+import traceback
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -105,6 +106,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.update_modified_state()
         self.parse()
 
+    def error_message(self, message):
+        QtWidgets.QMessageBox.critical(
+            self, message, f"{message}: {traceback.format_exc()}"
+        )
+
     def load(self, path):
         try:
             with open(path, 'rb') as f:
@@ -114,8 +120,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.save_dialog.selectFile(path)
             self.revert()
 
-        except Exception as ex:
-            QtWidgets.QMessageBox.critical(self, f"Can't load {path}", str(ex))
+        except Exception:
+            self.error_message(f"Can't load {path!r}")
 
     def save(self, path):
         try:
@@ -127,8 +133,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.open_dialog.selectFile(path)
             self.update_modified_state()
 
-        except Exception as ex:
-            QtWidgets.QMessageBox.critical(self, f"Can't save {path}", str(ex))
+        except Exception:
+            self.error_message(f"Can't write to {path!r}")
 
 
 def main():
