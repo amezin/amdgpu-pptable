@@ -23,6 +23,15 @@ SMU_11_0_ODSETTING_ID = _make_enum('SMU_11_0_ODSETTING_ID')
 SMU_11_0_PPCLOCK_ID = _make_enum('SMU_11_0_PPCLOCK_ID')
 
 
+class SMU_11_0_PP_PLATFORM_CAPS(enum.IntFlag):
+    SMU_11_0_PP_PLATFORM_CAP_POWERPLAY = gen.SMU_11_0_PP_PLATFORM_CAP_POWERPLAY
+    SMU_11_0_PP_PLATFORM_CAP_SBIOSPOWERSOURCE = gen.SMU_11_0_PP_PLATFORM_CAP_SBIOSPOWERSOURCE
+    SMU_11_0_PP_PLATFORM_CAP_HARDWAREDC = gen.SMU_11_0_PP_PLATFORM_CAP_HARDWAREDC
+    SMU_11_0_PP_PLATFORM_CAP_BACO = gen.SMU_11_0_PP_PLATFORM_CAP_BACO
+    SMU_11_0_PP_PLATFORM_CAP_MACO = gen.SMU_11_0_PP_PLATFORM_CAP_MACO
+    SMU_11_0_PP_PLATFORM_CAP_SHADOWPSTATE = gen.SMU_11_0_PP_PLATFORM_CAP_SHADOWPSTATE
+
+
 class ArrayDictAdapter(collections.abc.MutableMapping):
     index_type = int
 
@@ -90,6 +99,14 @@ class struct_smu_11_0_powerplay_table(gen.struct_smu_11_0_powerplay_table):
     def power_saving_clock(self):
         return struct_smu_11_0_power_saving_clock_table.from_buffer(super().power_saving_clock)
 
+    @property
+    def platform_caps(self):
+        return SMU_11_0_PP_PLATFORM_CAPS(super().platform_caps)
+
+    @platform_caps.setter
+    def platform_caps(self, value):
+        super().platform_caps = value
+
 
 def parse(buffer):
     main_table = struct_smu_11_0_powerplay_table.from_buffer(buffer)
@@ -98,5 +115,6 @@ def parse(buffer):
 
 
 __all__ = gen.__all__ + [
-    'parse'
+    'parse',
+    'SMU_11_0_PP_PLATFORM_CAPS'
 ]

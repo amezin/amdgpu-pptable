@@ -61,16 +61,20 @@ def build_standard_item(name, obj, edit_func=None):
     else:
         edit_item = QtGui.QStandardItem(str(obj))
         edit_item.setData(edit_func, Model.EditFuncRole)
+        edit_item.setData(type(obj), Model.TypeRole)
         return [name_item, edit_item]
 
 
 class Model(QtGui.QStandardItemModel):
     EditFuncRole = QtCore.Qt.UserRole + 1
+    TypeRole = EditFuncRole + 1
 
     def setData(self, index, value, role):
         if role == QtCore.Qt.EditRole:
             try:
-                self.data(index, self.EditFuncRole)(int(value))
+                target_type = self.data(index, self.TypeRole)
+                edit_func = self.data(index, self.EditFuncRole)
+                edit_func(target_type(value))
             except ValueError:
                 return False
 
