@@ -60,11 +60,11 @@ class ArrayDictAdapter(collections.abc.MutableMapping):
 class struct_smu_11_0_overdrive_table(gen.struct_smu_11_0_overdrive_table):
     @property
     def min(self):
-        return ArrayDictAdapter.make(super().min, SMU_11_0_ODFEATURE_CAP)
+        return ArrayDictAdapter.make(super().min, SMU_11_0_ODSETTING_ID)
 
     @property
     def max(self):
-        return ArrayDictAdapter.make(super().max, SMU_11_0_ODFEATURE_CAP)
+        return ArrayDictAdapter.make(super().max, SMU_11_0_ODSETTING_ID)
 
     @property
     def cap(self):
