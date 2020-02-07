@@ -18,7 +18,7 @@ def _make_enum(name):
     )
 
 
-SMU_11_0_ODFEATURE_ID = _make_enum('SMU_11_0_ODFEATURE_ID')
+SMU_11_0_ODFEATURE_CAP = _make_enum('SMU_11_0_ODFEATURE_CAP')
 SMU_11_0_ODSETTING_ID = _make_enum('SMU_11_0_ODSETTING_ID')
 SMU_11_0_PPCLOCK_ID = _make_enum('SMU_11_0_PPCLOCK_ID')
 
@@ -60,15 +60,15 @@ class ArrayDictAdapter(collections.abc.MutableMapping):
 class struct_smu_11_0_overdrive_table(gen.struct_smu_11_0_overdrive_table):
     @property
     def min(self):
-        return ArrayDictAdapter.make(super().min, SMU_11_0_ODSETTING_ID)
+        return ArrayDictAdapter.make(super().min, SMU_11_0_ODFEATURE_CAP)
 
     @property
     def max(self):
-        return ArrayDictAdapter.make(super().max, SMU_11_0_ODSETTING_ID)
+        return ArrayDictAdapter.make(super().max, SMU_11_0_ODFEATURE_CAP)
 
     @property
     def cap(self):
-        return ArrayDictAdapter.make(super().cap, SMU_11_0_ODFEATURE_ID)
+        return ArrayDictAdapter.make(super().cap, SMU_11_0_ODFEATURE_CAP)
 
 
 class struct_smu_11_0_power_saving_clock_table(gen.struct_smu_11_0_power_saving_clock_table):
