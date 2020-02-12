@@ -1,1 +1,6 @@
-.git_archival.txt  export-subst
+# Required by setuptools_scm_git_archive to generate version
+/.git_archival.txt export-subst
+
+# Debian directory shouldn't be included in upstream tarballs.
+# Changelog can't be correctly generated from archive anyway.
+/debian/** export-ignore

@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  build:
+    build: .
+    volumes:
+      - ../dist/debian:/build
+      - ./..:/build/src
+    working_dir: /build/src
+    network_mode: host
+    environment:
+      DEB_BUILD_OPTIONS: nocheck
+      DEBEMAIL:
+      DEBFULLNAME:
+      EMAIL:
+      NAME:
+    command:
+      - dpkg-buildpackage
+      - -b
+      - -us
+      - -uc

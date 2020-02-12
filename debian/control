@@ -1,0 +1,20 @@
+Source: amdgpu-pptable-editor
+Section: utils
+Priority: optional
+Build-Depends:
+ debhelper (>= 9),
+ dh-python,
+ python3-all (>= 3.6),
+ python3-setuptools (>= 40.8.0),
+ python3-setuptools-scm (>= 3.0.4),
+ python3-setuptools-scm-git-archive (>= 1.1),
+ python3-debian
+Maintainer: ${setuptools:Maintainer} <${setuptools:Maintainer-email}>
+Homepage: ${setuptools:Home-page}
+Vcs-Git: ${setuptools:Home-page}.git
+Standards-Version: 3.9.2
+
+Package: amdgpu-pptable-editor
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}
+Description: ${setuptools:Summary}

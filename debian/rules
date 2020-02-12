@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+#export DH_VERBOSE=1
+
+%: debian/changelog
+	dh $@ --with python3 --buildsystem=pybuild
+
+debian/changelog:
+	python3 debian/generate_changelog.py src/*.egg-info/PKG-INFO >$@
+
+.PHONY: debian/changelog
+
+override_dh_gencontrol:
+	python3 debian/generate_substvars.py src/*.egg-info/PKG-INFO >>debian/amdgpu-pptable-editor.substvars
+	dh_gencontrol

@@ -1,0 +1,7 @@
+/*.substvars
+/*.debhelper
+/*.debhelper.log
+/files
+/changelog
+
+/amdgpu-pptable-editor/
