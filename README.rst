@@ -19,7 +19,7 @@ Dependencies:
 On recent Debians/Ubuntus::
 
 $ sudo apt-get install python3-pyqt5 python3-pip git
-$ pip3 install --user git+https://github.com/amezin/powerplay-table-editor.git
+$ pip3 install --user git+https://github.com/amezin/amdgpu-pptable.git
 
 Usage
 -----
@@ -51,5 +51,5 @@ To re-generate it (with, maybe, different kernel sources)::
 $ tox -e generate-ctypes -- -k path/to/kernel/sources
 
 
-.. |Tests badge| image:: https://github.com/amezin/powerplay-table-editor/workflows/Tests/badge.svg
-.. |flake8 lint badge| image:: https://github.com/amezin/powerplay-table-editor/workflows/flake8%20lint/badge.svg
+.. |Tests badge| image:: https://github.com/amezin/amdgpu-pptable/workflows/Tests/badge.svg
+.. |flake8 lint badge| image:: https://github.com/amezin/amdgpu-pptable/workflows/flake8%20lint/badge.svg
