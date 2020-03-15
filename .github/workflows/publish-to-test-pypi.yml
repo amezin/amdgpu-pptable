@@ -1,0 +1,22 @@
+name: Publish to test pypi
+
+on:
+  push:
+    tags:
+      - 'pre-*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+    - run: pip install tox
+    - run: tox -e sdist,wheel
+    - uses: pypa/gh-action-pypi-publish@master
+      with:
+        repository_url: https://test.pypi.org/legacy/
+        user: __token__
+        password: ${{ secrets.test_pypi_token }}
