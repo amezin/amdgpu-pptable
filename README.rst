@@ -5,7 +5,7 @@ AMDGPU PowerPlay table parser
 
 A Python library that converts AMDGPU PowerPlay tables to ctypes structs.
 
-Uses code generated from AMDGPU Linux driver headers.
+Uses code generated from MIT-licensed AMDGPU Linux driver headers.
 
 For a Qt GUI editor see `amdgpu-pptable-editor-qt <https://github.com/amezin/amdgpu-pptable-editor-qt>`_
 
