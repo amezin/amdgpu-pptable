@@ -1,4 +1,4 @@
-|Tests badge| |flake8 lint badge|
+|Tests badge| |flake8 lint badge| |pypi badge|
 
 AMDGPU PowerPlay table parser
 =============================
@@ -21,3 +21,4 @@ $ tox -e generate-ctypes -- -k path/to/kernel/sources
 
 .. |Tests badge| image:: https://github.com/amezin/amdgpu-pptable/workflows/Tests/badge.svg
 .. |flake8 lint badge| image:: https://github.com/amezin/amdgpu-pptable/workflows/flake8%20lint/badge.svg
+.. |pypi badge| image:: https://img.shields.io/pypi/v/amdgpu-pptable?style=plastic
