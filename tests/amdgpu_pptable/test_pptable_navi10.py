@@ -10,4 +10,4 @@ def test_parse_navi10(table):
         orig_buffer = f.read()
 
     buffer = bytearray(orig_buffer)
-    pptable = amdgpu_pptable.smu_v11_0_pptable_navi10.parse(buffer)
+    amdgpu_pptable.smu_v11_0_pptable_navi10.parse(buffer)

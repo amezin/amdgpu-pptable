@@ -1,10 +1,9 @@
 import collections
-import ctypes
 import enum
 import logging
 
 from .generated import smu_v11_0_pptable_navi10 as gen
-from .generated.smu_v11_0_pptable_navi10 import *
+from .generated.smu_v11_0_pptable_navi10 import *  # noqa: F401
 
 
 LOG = logging.getLogger(__name__)
