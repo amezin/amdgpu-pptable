@@ -20,5 +20,8 @@ $ tox -e generate-ctypes -- -k path/to/kernel/sources
 
 
 .. |Tests badge| image:: https://github.com/amezin/amdgpu-pptable/workflows/Tests/badge.svg
+   :target: https://github.com/amezin/amdgpu-pptable/actions?query=workflow%3ATests
 .. |flake8 lint badge| image:: https://github.com/amezin/amdgpu-pptable/workflows/flake8%20lint/badge.svg
+   :target: https://github.com/amezin/amdgpu-pptable/actions?query=workflow%3A%22flake8+lint%22
 .. |pypi badge| image:: https://img.shields.io/pypi/v/amdgpu-pptable?style=plastic
+   :target: https://pypi.org/project/amdgpu-pptable/
