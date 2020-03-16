@@ -1,5 +1,7 @@
 import argparse
+import collections.abc
 import ctypes
+import enum
 import json
 import sys
 
@@ -7,6 +9,13 @@ from . import version_detect, version
 
 
 def make_serializable(obj):
+    if isinstance(obj, collections.abc.MutableMapping):
+
+        def key_to_str(key):
+            return key.name if isinstance(key, enum.Enum) else str(key)
+
+        return {key_to_str(key): make_serializable(value) for key, value in obj.items()}
+
     if isinstance(obj, ctypes.Structure):
         return {field: make_serializable(getattr(obj, field)) for field, _ in obj._fields_}
 
