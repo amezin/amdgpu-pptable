@@ -61,7 +61,17 @@ def run(kernel_dir, log_level):
     kernel_dir = os.path.abspath(kernel_dir)
     out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src', 'amdgpu_pptable', 'generated')
 
-    header_file = os.path.join(kernel_dir, 'drivers/gpu/drm/amd/powerplay/hwmgr/vega10_pptable.h')
+    powerplay_old_dir = os.path.join(kernel_dir, 'drivers/gpu/drm/amd/powerplay')
+    powerplay_new_dir = os.path.join(kernel_dir, 'drivers/gpu/drm/amd/pm/powerplay')
+
+    powerplay_dir = powerplay_old_dir if os.path.exists(powerplay_old_dir) else powerplay_new_dir
+
+    powerplay_inc_old_dir = os.path.join(powerplay_old_dir, 'inc')
+    powerplay_inc_new_dir = os.path.join(kernel_dir, 'drivers/gpu/drm/amd/pm/inc')
+
+    powerplay_inc_dir = powerplay_inc_old_dir if os.path.exists(powerplay_inc_old_dir) else powerplay_inc_new_dir
+
+    header_file = os.path.join(powerplay_dir, 'hwmgr/vega10_pptable.h')
     includes = [
         os.path.join(kernel_dir, 'drivers/gpu/drm/amd/include/atom-types.h'),
         os.path.join(kernel_dir, 'drivers/gpu/drm/amd/include/atomfirmware.h')
@@ -74,7 +84,7 @@ def run(kernel_dir, log_level):
 
     generate_ctypes(header_file, py_file, cpp_flags)
 
-    header_file = os.path.join(kernel_dir, 'drivers/gpu/drm/amd/powerplay/hwmgr/pptable_v1_0.h')
+    header_file = os.path.join(powerplay_dir, 'hwmgr/pptable_v1_0.h')
     py_file = os.path.join(out_dir, 'pptable_v1_0.py')
     includes = [
         os.path.join(kernel_dir, 'drivers/gpu/drm/amd/include/atom-types.h'),
@@ -86,12 +96,12 @@ def run(kernel_dir, log_level):
 
     generate_ctypes(header_file, py_file, cpp_flags)
 
-    header_file = os.path.join(kernel_dir, 'drivers/gpu/drm/amd/powerplay/inc/smu_v11_0_pptable.h')
+    header_file = os.path.join(powerplay_inc_dir, 'smu_v11_0_pptable.h')
     py_file = os.path.join(out_dir, 'smu_v11_0_pptable_navi10.py')
     includes = [
         os.path.join(kernel_dir, 'drivers/gpu/drm/amd/include/atom-types.h'),
         os.path.join(kernel_dir, 'drivers/gpu/drm/amd/include/atomfirmware.h'),
-        os.path.join(kernel_dir, 'drivers/gpu/drm/amd/powerplay/inc/smu11_driver_if_navi10.h')
+        os.path.join(powerplay_inc_dir, 'smu11_driver_if_navi10.h')
     ]
     cpp_flags = ['-include', 'stdint.h']
     for inc in includes:
